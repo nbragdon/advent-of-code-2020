@@ -86,25 +86,47 @@ function parseLine(entryLine) {
     return false;
 }
 
-let numberOfTreeCollisions = 0;
-let currentPosition = {
-    x: 0,
-    y: 0
-};
-let slope = {
-    x: 3,
-    y: 1
-}
-while (currentPosition.y < entriesArray.length) {
-    if (entriesArray[currentPosition.y][currentPosition.x] == "#") {
-        console.log("Hit tree at: " + currentPosition.x + ", " + currentPosition.y);
-        numberOfTreeCollisions += 1;
+let treesHitMultiplied = 1;
+let slopes = [
+    {
+        x: 1,
+        y: 1
+    },
+    {
+        x: 3,
+        y: 1
+    },
+    {
+        x: 5,
+        y: 1
+    },
+    {
+        x: 7,
+        y: 1
+    },
+    {
+        x: 1,
+        y: 2
     }
+];
+slopes.forEach( slope => {
+    let numberOfTreeCollisions = 0;
+    let currentPosition = {
+        x: 0,
+        y: 0
+    };
+    while (currentPosition.y < entriesArray.length) {
+        if (entriesArray[currentPosition.y][currentPosition.x] == "#") {
+            numberOfTreeCollisions += 1;
+        }
 
-    currentPosition.x = (currentPosition.x + slope.x) % entriesArray[currentPosition.y].length;
-    currentPosition.y = currentPosition.y + slope.y;
-    console.log("Current Position: " + currentPosition.x + ", " + currentPosition.y);
-}
+        currentPosition.x = (currentPosition.x + slope.x) % entriesArray[currentPosition.y].length;
+        currentPosition.y = currentPosition.y + slope.y;
+    }
+    console.log("Total trees hit: " + numberOfTreeCollisions);
+    treesHitMultiplied = treesHitMultiplied * numberOfTreeCollisions;
+    console.log("Trees Hit Multiplied: " + treesHitMultiplied);
+});
 
-console.log("Total trees hit: " + numberOfTreeCollisions);
+
 
